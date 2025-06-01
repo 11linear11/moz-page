@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* تعریف فونت My Ugly Handwriting */
+        @font-face {
+            font-family: 'My Ugly Handwriting';
+            src: url('My Ugly Handwriting.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            height: 300vh;
+            position: relative;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .animated-element {
+            position: fixed;
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            background-image: url('1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            opacity: 0;
+            
+        }
+
+        .animated-element:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #686868;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+            z-index: 5;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            position: relative;
+        }
+
+        .section:nth-child(2) {
+            backdrop-filter: blur(10px);
+        }
+
+        .section-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .section-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .section-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .section-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            z-index: 1;
+            mask: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 15%, 
+                black 85%, 
+                transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, 
+                transparent 0%, 
+                black 15%, 
+                black 85%, 
+                transparent 100%);
+        }
+
+        .section1-image {
+            background-image: url('2.png');
+        }
+
+        .section2-image {
+            background-image: url('3.png');
+        }
+
+        .section3-image {
+            background-image: url('2.png');
+        }
+
+        /* متن انیمیشنی صفحه اول */
+        .welcome-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            text-align: center;
+            color: #686868;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        .welcome-text h1 {
+            font-family: 'My Ugly Handwriting', 'Kalam', cursive;
+            font-weight: 700;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .welcome-text p {
+            font-family: 'My Ugly Handwriting', 'Kalam', cursive;
+            font-weight: 200;
+            
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* مخفی کردن متن بعد از اسکرول */
+        .welcome-text.hidden {
+            animation: fadeOut 1s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ریسپانسیو برای موبایل */
+        @media (max-width: 768px) {
+            .welcome-text h1 {
+                font-size: 2.5rem;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    
+    <!-- متن خوشامدگویی انیمیشنی -->
+    <div class="welcome-text" id="welcomeText">
+        <h1>Welcome to MoZ Land</h1>
+        <p> click and scrol </p>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <div class="section-image section1-image"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-image section2-image"></div>
+        </div>
+        
+        <div class="section">
+            <div class="section-image section3-image"></div>
+        </div>
+    </div>
+
+    <div class="animated-element" id="animatedElement"></div>
+    <div class="scroll-indicator">⬇</div>
+
+    <!-- پخش موسیقی خودکار -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="mu2.mp3" type="audio/mpeg">
+        <source src="YOUR_MUSIC_LINK_HERE" type="audio/wav">
+        مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
+    </audio>
+
+    <script>
+        const animatedElement = document.getElementById('animatedElement');
+        const welcomeText = document.getElementById('welcomeText');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        let hasScrolled = false;
+
+        // پخش موسیقی خودکار
+        window.addEventListener('load', () => {
+            // تلاش برای پخش خودکار
+            backgroundMusic.play().catch(error => {
+                console.log('Auto-play was prevented:', error);
+                // اگر پخش خودکار مسدود باشد، با اولین کلیک کاربر پخش می‌شود
+                document.addEventListener('click', () => {
+                    backgroundMusic.play();
+                }, { once: true });
+            });
+        });
+
+        // انیمیشن اسکرول
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // حرکت پس زمینه
+            document.querySelector('.background-image').style.transform = `translateY(${rate}px)`;
+            
+            // مخفی کردن متن خوشامدگویی بعد از اسکرول
+            if (scrolled > 100 && !welcomeText.classList.contains('hidden')) {
+                welcomeText.classList.add('hidden');
+            }
+            
+            // انیمیشن عنصر متحرک
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollPercent = scrolled / (documentHeight - windowHeight);
+            
+            // عنصر متحرک فقط بعد از اسکرول 15% شروع به ظاهر شدن می‌کند
+            if (scrollPercent > 0.15) {
+                const fadeInProgress = Math.min((scrollPercent - 0.15) / 0.1, 1);
+                animatedElement.style.opacity = fadeInProgress;
+                
+                // موقعیت عنصر متحرک
+                const elementTop = -300 + (scrollPercent - 0.15) * 900;
+                animatedElement.style.top = Math.min(elementTop, windowHeight - 200) + 'px';
+                
+                if (!hasScrolled && scrollPercent > 0.6) {
+                    hasScrolled = true;
+                    document.querySelector('.scroll-indicator').style.opacity = '0';
+                }
+            } else {
+                animatedElement.style.opacity = '0';
+            }
+        });
+
+        // مخفی کردن اندیکاتور اسکرول بعد از مدتی
+        setTimeout(() => {
+            if (!hasScrolled) {
+                document.querySelector('.scroll-indicator').style.opacity = '0.5';
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
